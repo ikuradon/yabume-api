@@ -39,7 +39,7 @@ const getEventRoute = createRoute({
 
 const publishEventRoute = createRoute({
   method: "post",
-  path: "/",
+  path: "",
   request: {
     body: {
       content: {
