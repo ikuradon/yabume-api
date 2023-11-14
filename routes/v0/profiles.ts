@@ -1,5 +1,4 @@
 import { createRoute, OpenAPIHono } from "@hono/zod-openapi";
-import { type Context } from "hono";
 import { validationHook } from "/lib/honoHelper.ts";
 import { nip19ToHex } from "/lib/nostr.ts";
 import { getProfile } from "/lib/relay.ts";
