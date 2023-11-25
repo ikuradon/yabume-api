@@ -102,8 +102,7 @@ profilesAPI.openapi(gerProfilePictureRoute, async (c) => {
   const picture = content.picture || '';
   const banner = content.banner || '';
 
-  if (size === 0) return c.jsonT({ picture, banner });
-  else if (imgproxy != null) {
+  if (imgproxy != null && size !== 0) {
     return c.jsonT({
       picture: imgproxy
         .builder()
@@ -114,5 +113,7 @@ profilesAPI.openapi(gerProfilePictureRoute, async (c) => {
         .resize('fill', size, size, false)
         .generateUrl(banner),
     });
+  } else {
+    return c.jsonT({ picture, banner });
   }
 });
