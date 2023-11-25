@@ -1,5 +1,10 @@
 import { createRoute, OpenAPIHono } from "@hono/zod-openapi";
 import Imgproxy from "imgproxy";
+import {
+  IMGPROXY_BASEURL,
+  IMGPROXY_KEY,
+  IMGPROXY_SALT,
+} from "/lib/environment.ts";
 import { validationHook } from "/lib/honoHelper.ts";
 import { nip19ToHex } from "/lib/nostr.ts";
 import { getProfile } from "/lib/relay.ts";
@@ -7,16 +12,18 @@ import {
   errorSchema,
   nostrEventSchema,
   nostrPictureSchema,
-  profileParamsSchema,
   pictureQuerySchema,
+  profileParamsSchema,
 } from "/lib/schema.ts";
 
-const imgproxy = new Imgproxy.default({
-  baseUrl: Deno.env.get("IMGPROXY_BASEURL") as string,
-  key: Deno.env.get("IMGPROXY_KEY") as string,
-  salt: Deno.env.get("IMGPROXY_SALT") as string,
-  encode: true,
-});
+let imgproxy: Imgproxy.Imgproxy;
+if (IMGPROXY_BASEURL != null && IMGPROXY_KEY != null && IMGPROXY_SALT != null)
+  imgproxy = new Imgproxy.default({
+    baseUrl: IMGPROXY_BASEURL,
+    key: IMGPROXY_KEY,
+    salt: IMGPROXY_SALT,
+    encode: true,
+  });
 
 const getProfileRoute = createRoute({
   method: "get",
@@ -97,7 +104,7 @@ profilesAPI.openapi(gerProfilePictureRoute, async (c) => {
   const banner = content.banner || "";
 
   if (size === 0) return c.jsonT({ picture, banner });
-  else
+  else if (imgproxy != null)
     return c.jsonT({
       picture: imgproxy
         .builder()

@@ -3,10 +3,8 @@ import { logger } from "hono/logger";
 import { routes } from "./routes.ts";
 import * as maxmind from "/lib/maxmind.ts";
 import * as relay from "/lib/relay.ts";
-import * as dotenv from "dotenv";
-dotenv.loadSync({ export: true });
+import { RELAY_URL } from "/lib/environment.ts";
 
-const RELAY_URL = Deno.env.get("RELAY_URL");
 if (RELAY_URL == null) Deno.exit(1);
 await relay.init(RELAY_URL);
 await maxmind.init();
