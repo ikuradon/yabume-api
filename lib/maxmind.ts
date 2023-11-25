@@ -46,7 +46,7 @@ export const checkIP = (access_ip: string): boolean => {
   IpAllowList.some((value) => {
     const cidr = (() => {
       try {
-        return ip.cidrSubnet(access_ip);
+        return ip.cidrSubnet(value);
       } catch (_) {
         return null;
       }
