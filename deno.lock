@@ -4,15 +4,19 @@
     "specifiers": {
       "npm:@hono/swagger-ui@0.1.0": "npm:@hono/swagger-ui@0.1.0_hono@3.9.2",
       "npm:@hono/zod-openapi@0.8.3": "npm:@hono/zod-openapi@0.8.3_hono@3.9.2_zod@3.22.4",
+      "npm:@hono/zod-openapi@0.8.6": "npm:@hono/zod-openapi@0.8.6_hono@3.9.2_zod@3.22.4",
       "npm:@hono/zod-validator@0.1.11": "npm:@hono/zod-validator@0.1.11_hono@3.9.2_zod@3.22.4",
       "npm:@types/ip@1.1.3": "npm:@types/ip@1.1.3",
       "npm:create-hono": "npm:create-hono@0.3.2",
+      "npm:hono@3.10.2": "npm:hono@3.10.2",
       "npm:hono@3.9.2": "npm:hono@3.9.2",
+      "npm:imgproxy@1.2.0": "npm:imgproxy@1.2.0",
       "npm:ip-address@9.0.5": "npm:ip-address@9.0.5",
       "npm:ip-cidr@3.1.0": "npm:ip-cidr@3.1.0",
       "npm:ip@1.1.8": "npm:ip@1.1.8",
       "npm:maxmind@4.3.17": "npm:maxmind@4.3.17",
-      "npm:nostr-tools@1.17.0": "npm:nostr-tools@1.17.0"
+      "npm:nostr-tools@1.17.0": "npm:nostr-tools@1.17.0",
+      "npm:zod@3.22.4": "npm:zod@3.22.4"
     },
     "npm": {
       "@asteasolutions/zod-to-openapi@5.5.0_zod@3.22.4": {
@@ -30,6 +34,15 @@
       },
       "@hono/zod-openapi@0.8.3_hono@3.9.2_zod@3.22.4": {
         "integrity": "sha512-TwjSf63miIF3VBqNy4V6EOqZYdTQPeIQQ9Q2HjRWFYH9f2QtBFXziuqIg2Y76gNZ3WDal67NQXmbSErHiFR44g==",
+        "dependencies": {
+          "@asteasolutions/zod-to-openapi": "@asteasolutions/zod-to-openapi@5.5.0_zod@3.22.4",
+          "@hono/zod-validator": "@hono/zod-validator@0.1.11_hono@3.9.2_zod@3.22.4",
+          "hono": "hono@3.9.2",
+          "zod": "zod@3.22.4"
+        }
+      },
+      "@hono/zod-openapi@0.8.6_hono@3.9.2_zod@3.22.4": {
+        "integrity": "sha512-HQNmJoIGyu2kNK9DI8+gIyV4c+bZm5t75PytPSRqMTim9P9HAAPMtepxu44aPZO9ehDxK4KZlRVRqz8OBxOL1A==",
         "dependencies": {
           "@asteasolutions/zod-to-openapi": "@asteasolutions/zod-to-openapi@5.5.0_zod@3.22.4",
           "@hono/zod-validator": "@hono/zod-validator@0.1.11_hono@3.9.2_zod@3.22.4",
@@ -91,8 +104,16 @@
         "integrity": "sha512-hJX9+wgzKb2Pd7DeaCgt9C0V3U0497hy64CFAkk1Tc0ZKkLh3X0mPnkvYDQofkb9n/B2/rYYvDnD7P5rRamFRA==",
         "dependencies": {}
       },
+      "hono@3.10.2": {
+        "integrity": "sha512-QwJLjWs3e+nZ3b5nQrrdJpYCJqiTK744jeYhX7yhZdxwcQ3KIohBfzI2dA8gSF6HEZkmFUdiKL1BelJ8utIm4w==",
+        "dependencies": {}
+      },
       "hono@3.9.2": {
         "integrity": "sha512-180NOiMadqU3lGmN6ajPDZvZPWus3a9mtVaAUR9uG0SImngBwRLA8vbnV0oUfUAgFT4nX55sGV9dVA06OuikHA==",
+        "dependencies": {}
+      },
+      "imgproxy@1.2.0": {
+        "integrity": "sha512-ZcyBJArEPuIQvW5fiWssgmxUYQD8oGlN3YacLPsAlijvkjDPEo6hvgZh3uAAivELk+1ewCquKwC5HI6VALubdw==",
         "dependencies": {}
       },
       "ip-address@7.1.0": {
@@ -175,6 +196,7 @@
     }
   },
   "remote": {
+    "https://deno.land/std@0.206.0/dotenv/mod.ts": "039468f5c87d39b69d7ca6c3d68ebca82f206ec0ff5e011d48205eea292ea5a6",
     "https://deno.land/x/hono@v3.9.2/adapter/deno/serve-static.ts": "ba10cf6aaf39da942b0d49c3b9877ddba69d41d414c6551d890beb1085f58eea",
     "https://deno.land/x/hono@v3.9.2/client/client.ts": "ff340f58041203879972dd368b011ed130c66914f789826610869a90603406bf",
     "https://deno.land/x/hono@v3.9.2/client/index.ts": "3ff4cf246f3543f827a85a2c84d66a025ac350ee927613629bda47e854bfb7ba",

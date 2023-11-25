@@ -103,6 +103,13 @@ export const profileParamsSchema = z.object({
     }),
 });
 
+export const pictureQuerySchema = z.object({
+  size: z.coerce.number().int().min(0).max(1024).default(0).openapi({
+    example: 512,
+    type: "number",
+  }),
+});
+
 export const errorSchema = z.object({
   code: z.number().openapi({
     example: 400,

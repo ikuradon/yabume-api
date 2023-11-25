@@ -3,6 +3,8 @@ import { logger } from "hono/logger";
 import { routes } from "./routes.ts";
 import * as maxmind from "/lib/maxmind.ts";
 import * as relay from "/lib/relay.ts";
+import * as dotenv from "dotenv";
+dotenv.loadSync({ export: true });
 
 await relay.init("wss://yabu.me");
 await maxmind.init();

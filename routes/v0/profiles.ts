@@ -1,4 +1,5 @@
 import { createRoute, OpenAPIHono } from "@hono/zod-openapi";
+import Imgproxy from "imgproxy";
 import { validationHook } from "/lib/honoHelper.ts";
 import { nip19ToHex } from "/lib/nostr.ts";
 import { getProfile } from "/lib/relay.ts";
@@ -7,7 +8,15 @@ import {
   nostrEventSchema,
   nostrPictureSchema,
   profileParamsSchema,
+  pictureQuerySchema,
 } from "/lib/schema.ts";
+
+const imgproxy = new Imgproxy.default({
+  baseUrl: Deno.env.get("IMGPROXY_BASEURL") as string,
+  key: Deno.env.get("IMGPROXY_KEY") as string,
+  salt: Deno.env.get("IMGPROXY_SALT") as string,
+  encode: true,
+});
 
 const getProfileRoute = createRoute({
   method: "get",
@@ -40,6 +49,7 @@ const gerProfilePictureRoute = createRoute({
   path: "/{id}/picture",
   request: {
     params: profileParamsSchema,
+    query: pictureQuerySchema,
   },
   responses: {
     200: {
@@ -75,6 +85,7 @@ profilesAPI.openapi(getProfileRoute, async (c) => {
 
 profilesAPI.openapi(gerProfilePictureRoute, async (c) => {
   const { id }: { id: string } = c.req.valid("param");
+  const { size }: { size: number } = c.req.valid("query");
   const hex = nip19ToHex(id);
 
   const event = await getProfile(hex);
@@ -84,5 +95,17 @@ profilesAPI.openapi(gerProfilePictureRoute, async (c) => {
   const content = JSON.parse(event.content);
   const picture = content.picture || "";
   const banner = content.banner || "";
-  return c.jsonT({ picture, banner });
+
+  if (size === 0) return c.jsonT({ picture, banner });
+  else
+    return c.jsonT({
+      picture: imgproxy
+        .builder()
+        .resize("fill", size, size, false)
+        .generateUrl(picture),
+      banner: imgproxy
+        .builder()
+        .resize("fill", size, size, false)
+        .generateUrl(banner),
+    });
 });
