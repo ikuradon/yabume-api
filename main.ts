@@ -6,7 +6,9 @@ import * as relay from "/lib/relay.ts";
 import * as dotenv from "dotenv";
 dotenv.loadSync({ export: true });
 
-await relay.init("wss://yabu.me");
+const RELAY_URL = Deno.env.get("RELAY_URL");
+if (RELAY_URL == null) Deno.exit(1);
+await relay.init(RELAY_URL);
 await maxmind.init();
 
 const app = new Hono();
