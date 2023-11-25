@@ -46,6 +46,17 @@ export const nostrEventSchema: z.ZodType<Event> = z
   })
   .openapi("Event");
 
+export const nostrPictureSchema = z.object({
+  picture: z.string().openapi({
+    example: "https://example.com/image.jpg",
+    type: "string",
+  }),
+  banner: z.string().openapi({
+    example: "https://example.com/image.jpg",
+    type: "string",
+  }),
+});
+
 export const eventParamsSchema = z.object({
   id: z
     .union([

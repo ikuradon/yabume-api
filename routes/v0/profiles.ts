@@ -5,6 +5,7 @@ import { getProfile } from "/lib/relay.ts";
 import {
   errorSchema,
   nostrEventSchema,
+  nostrPictureSchema,
   profileParamsSchema,
 } from "/lib/schema.ts";
 
@@ -34,6 +35,32 @@ const getProfileRoute = createRoute({
   },
 });
 
+const gerProfilePictureRoute = createRoute({
+  method: "get",
+  path: "/{id}/picture",
+  request: {
+    params: profileParamsSchema,
+  },
+  responses: {
+    200: {
+      content: {
+        "application/json": {
+          schema: nostrPictureSchema,
+        },
+      },
+      description: "Retrive the profile picture",
+    },
+    400: {
+      content: {
+        "application/json": {
+          schema: errorSchema,
+        },
+      },
+      description: "Returns an error",
+    },
+  },
+});
+
 export const profilesAPI = new OpenAPIHono({ defaultHook: validationHook });
 
 profilesAPI.openapi(getProfileRoute, async (c) => {
@@ -44,4 +71,18 @@ profilesAPI.openapi(getProfileRoute, async (c) => {
   if (event == null)
     return c.jsonT({ code: 404, message: "Event Not Found" }, 404);
   return c.jsonT(event);
+});
+
+profilesAPI.openapi(gerProfilePictureRoute, async (c) => {
+  const { id }: { id: string } = c.req.valid("param");
+  const hex = nip19ToHex(id);
+
+  const event = await getProfile(hex);
+  if (event == null)
+    return c.jsonT({ code: 404, message: "Event Not Found" }, 404);
+
+  const content = JSON.parse(event.content);
+  const picture = content.picture || "";
+  const banner = content.banner || "";
+  return c.jsonT({ picture, banner });
 });
