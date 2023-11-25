@@ -1,4 +1,4 @@
-import { relayInit, type Relay, type Event } from "nostr-tools";
+import { type Event, type Relay, relayInit } from 'nostr-tools';
 
 export let relay: Relay;
 let relayUrl: string;

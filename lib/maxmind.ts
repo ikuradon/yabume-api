@@ -1,27 +1,23 @@
-import maxmind, {
-  type AsnResponse,
-  type CountryResponse,
-  type Reader,
-} from "maxmind";
+import maxmind, { type AsnResponse, type CountryResponse, type Reader } from 'maxmind';
 // @deno-types="@types/ip"
-import { default as ip } from "ip";
+import { default as ip } from 'ip';
 
 export let ASN: Reader<AsnResponse>;
 export let Country: Reader<CountryResponse>;
 
 export const init = async (): Promise<void> => {
-  ASN = await maxmind.open<AsnResponse>(Deno.cwd() + "/geoip/ASN.mmdb");
+  ASN = await maxmind.open<AsnResponse>(Deno.cwd() + '/geoip/ASN.mmdb');
   Country = await maxmind.open<CountryResponse>(
-    Deno.cwd() + "/geoip/Country.mmdb"
+    Deno.cwd() + '/geoip/Country.mmdb',
   );
 };
 
 const IpAllowList = [
-  "127.0.0.0/8",
-  "192.168.0.0/16",
-  "172.16.0.0/12",
-  "10.0.0.0/8",
-  "fe80::/10",
+  '127.0.0.0/8',
+  '192.168.0.0/16',
+  '172.16.0.0/12',
+  '10.0.0.0/8',
+  'fe80::/10',
 ];
 
 interface ASNList {

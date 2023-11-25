@@ -1,7 +1,7 @@
-import { type Context } from "hono";
+import { type Context } from 'hono';
 
 export const methodNotAllowed = (c: Context) => {
-  return c.json({ status: 405, message: "method not allowed" }, 405);
+  return c.json({ status: 405, message: 'method not allowed' }, 405);
 };
 
 export const validationHook = (result, c: Context) => {
@@ -9,9 +9,9 @@ export const validationHook = (result, c: Context) => {
     return c.jsonT(
       {
         code: 400,
-        message: "Validation Error",
+        message: 'Validation Error',
       },
-      400
+      400,
     );
   }
 };

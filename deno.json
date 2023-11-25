@@ -17,5 +17,29 @@
     "maxmind": "npm:maxmind@4.3.17",
     "nostr-tools": "npm:nostr-tools@1.17.0",
     "zod": "npm:zod@3.22.4"
+  },
+  "lint": {
+    "include": [
+      "."
+    ],
+    "rules": {
+      "tags": [
+        "recommended"
+      ],
+      "exclude": [
+        "no-explicit-any"
+      ]
+    }
+  },
+  "fmt": {
+    "include": [
+      "."
+    ],
+    "useTabs": false,
+    "lineWidth": 120,
+    "indentWidth": 2,
+    "semiColons": true,
+    "singleQuote": true,
+    "proseWrap": "preserve"
   }
 }
