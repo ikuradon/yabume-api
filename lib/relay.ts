@@ -13,23 +13,24 @@ const connect = async () => {
 };
 
 export const getEvent = (id: string): Promise<Event | null> => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const sub = relay.subscribe([
       { ids: [id], limit: 1 },
     ], {
       onevent(event) {
+        sub.close();
         resolve(event);
       },
       oneose() {
         sub.close();
-        reject(null);
+        resolve(null);
       },
     });
   });
 };
 
 export const getProfile = (author: string): Promise<Event | null> => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const sub = relay.subscribe([
       {
         kinds: [0],
@@ -38,11 +39,12 @@ export const getProfile = (author: string): Promise<Event | null> => {
       },
     ], {
       onevent(event) {
+        sub.close();
         resolve(event);
       },
       oneose() {
         sub.close();
-        reject(null);
+        resolve(null);
       },
     });
   });
