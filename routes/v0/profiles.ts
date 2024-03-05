@@ -110,7 +110,7 @@ profilesAPI.openapi(gerProfilePictureRoute, async (c) => {
         .generateUrl(picture),
       banner: imgproxy
         .builder()
-        .resize('fill', size, size, false)
+        .resize('fit', size, size, false)
         .generateUrl(banner),
     });
   } else {
