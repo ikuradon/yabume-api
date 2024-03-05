@@ -1,5 +1,5 @@
 import { createRoute, OpenAPIHono } from '@hono/zod-openapi';
-import { validateEvent, verifySignature } from 'nostr-tools';
+import { validateEvent, verifyEvent } from 'nostr-tools';
 import { validationHook } from '/lib/honoHelper.ts';
 import { checkIP } from '/lib/maxmind.ts';
 import { nip19ToHex } from '/lib/nostr.ts';
@@ -72,33 +72,33 @@ eventsAPI.openapi(getEventRoute, async (c) => {
 
   const event = await getEvent(hex);
   if (event == null) {
-    return c.jsonT({ code: 404, message: 'Event not found' }, 404);
+    return c.json({ code: 404, message: 'Event not found' }, 404);
   }
-  return c.jsonT(event);
+  return c.json(event);
 });
 
 eventsAPI.openapi(publishEventRoute, async (c) => {
   const user_ip = c.req.header('X-Forwarded-For') || null;
   if (user_ip != null && !checkIP(user_ip)) {
-    return c.jsonT({ code: 403, message: 'Access denied' }, 403);
+    return c.json({ code: 403, message: 'Access denied' }, 403);
   }
   const event = c.req.valid('json');
   try {
-    if (!validateEvent(event) || !verifySignature(event)) {
-      return c.jsonT({ code: 400, message: 'Event is not valid' }, 400);
+    if (!validateEvent(event) || !verifyEvent(event)) {
+      return c.json({ code: 400, message: 'Event is not valid' }, 400);
     }
   } catch (_) {
-    return c.jsonT(
+    return c.json(
       {
         code: 400,
-        message: 'Can\'t validate event',
+        message: "Can't validate event",
       },
       400,
     );
   }
 
   await publish(event);
-  return c.jsonT({
+  return c.json({
     code: 201,
     message: 'Event Published',
   });

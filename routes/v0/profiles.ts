@@ -83,9 +83,9 @@ profilesAPI.openapi(getProfileRoute, async (c) => {
 
   const event = await getProfile(hex);
   if (event == null) {
-    return c.jsonT({ code: 404, message: 'Event Not Found' }, 404);
+    return c.json({ code: 404, message: 'Event Not Found' }, 404);
   }
-  return c.jsonT(event);
+  return c.json(event);
 });
 
 profilesAPI.openapi(gerProfilePictureRoute, async (c) => {
@@ -95,7 +95,7 @@ profilesAPI.openapi(gerProfilePictureRoute, async (c) => {
 
   const event = await getProfile(hex);
   if (event == null) {
-    return c.jsonT({ code: 404, message: 'Event Not Found' }, 404);
+    return c.json({ code: 404, message: 'Event Not Found' }, 404);
   }
 
   const content = JSON.parse(event.content);
@@ -103,7 +103,7 @@ profilesAPI.openapi(gerProfilePictureRoute, async (c) => {
   const banner = content.banner || '';
 
   if (imgproxy != null && size !== 0) {
-    return c.jsonT({
+    return c.json({
       picture: imgproxy
         .builder()
         .resize('fill', size, size, false)
@@ -114,6 +114,6 @@ profilesAPI.openapi(gerProfilePictureRoute, async (c) => {
         .generateUrl(banner),
     });
   } else {
-    return c.jsonT({ picture, banner });
+    return c.json({ picture, banner });
   }
 });
