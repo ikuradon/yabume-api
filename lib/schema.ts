@@ -127,3 +127,16 @@ export const eventPublishedSchema = z.object({
     type: 'string',
   }),
 });
+
+export const optimizeImageParamsSchema = z.object({
+  opts: z.string().openapi({
+    param: { name: 'opts', in: 'path' },
+    example: 'width=800,quality=60,format=webp',
+    type: 'string',
+  }),
+  url: z.string().openapi({
+    param: { name: 'url', in: 'path' },
+    example: 'https://example.com/image.jpg',
+    type: 'string',
+  }),
+});
