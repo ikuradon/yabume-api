@@ -45,10 +45,18 @@ const getProfileRoute = createRoute({
       },
       description: 'Returns an error',
     },
+    404: {
+      content: {
+        'application/json': {
+          schema: errorSchema,
+        },
+      },
+      description: 'Returns an error',
+    },
   },
 });
 
-const gerProfilePictureRoute = createRoute({
+const getProfilePictureRoute = createRoute({
   method: 'get',
   path: '/{id}/picture',
   request: {
@@ -72,6 +80,14 @@ const gerProfilePictureRoute = createRoute({
       },
       description: 'Returns an error',
     },
+    404: {
+      content: {
+        'application/json': {
+          schema: errorSchema,
+        },
+      },
+      description: 'Returns an error',
+    },
   },
 });
 
@@ -88,7 +104,7 @@ profilesAPI.openapi(getProfileRoute, async (c) => {
   return c.json(event);
 });
 
-profilesAPI.openapi(gerProfilePictureRoute, async (c) => {
+profilesAPI.openapi(getProfilePictureRoute, async (c) => {
   const { id }: { id: string } = c.req.valid('param');
   const { size }: { size: number } = c.req.valid('query');
   const hex = nip19ToHex(id);
