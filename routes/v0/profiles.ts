@@ -1,5 +1,5 @@
 import { createRoute, OpenAPIHono } from '@hono/zod-openapi';
-import Imgproxy from 'imgproxy';
+import { generateImageUrl } from '@imgproxy/imgproxy-node';
 import { IMGPROXY_BASEURL, IMGPROXY_KEY, IMGPROXY_SALT } from '/lib/environment.ts';
 import { validationHook } from '/lib/honoHelper.ts';
 import { nip19ToHex } from '/lib/nostr.ts';
@@ -11,15 +11,15 @@ import {
   pictureQuerySchema,
   profileParamsSchema,
 } from '/lib/schema.ts';
+import { ImgproxyConfig } from '/lib/constants.ts';
 
-let imgproxy: Imgproxy.Imgproxy;
+let imgproxyConfig: ImgproxyConfig | undefined;
 if (IMGPROXY_BASEURL != null && IMGPROXY_KEY != null && IMGPROXY_SALT != null) {
-  imgproxy = new Imgproxy.default({
-    baseUrl: IMGPROXY_BASEURL,
+  imgproxyConfig = {
+    endpoint: IMGPROXY_BASEURL,
     key: IMGPROXY_KEY,
     salt: IMGPROXY_SALT,
-    encode: true,
-  });
+  };
 }
 
 const getProfileRoute = createRoute({
@@ -118,8 +118,26 @@ profilesAPI.openapi(getProfilePictureRoute, async (c) => {
   const picture = content.picture || '';
   const banner = content.banner || '';
 
-  if (imgproxy != null && size !== 0) {
+  if (imgproxyConfig != null && size !== 0) {
     return c.json({
+      picture: generateImageUrl({
+        ...imgproxyConfig,
+        url: picture,
+        options: {
+          resizing_type: 'fill',
+          width: size,
+          height: size,
+        },
+      }),
+      banner: generateImageUrl({
+        ...imgproxyConfig,
+        url: banner,
+        options: {
+          resizing_type: 'fill',
+          width: size,
+          height: size,
+        },
+      }),
     }, 200);
   } else {
     return c.json({ picture, banner }, 200);
