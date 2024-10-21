@@ -6,7 +6,7 @@ export const methodNotAllowed = (c: Context) => {
 
 export const validationHook = (result, c: Context) => {
   if (!result.success) {
-    return c.jsonT(
+    return c.json(
       {
         code: 400,
         message: 'Validation Error',
