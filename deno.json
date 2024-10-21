@@ -6,16 +6,16 @@
   "imports": {
     "/": "./",
     "./": "./",
-    "@hono/swagger-ui": "npm:@hono/swagger-ui@0.2.1",
-    "@hono/zod-openapi": "npm:@hono/zod-openapi@0.9.6",
+    "@hono/swagger-ui": "npm:@hono/swagger-ui@0.4.1",
+    "@hono/zod-openapi": "npm:@hono/zod-openapi@0.16.4",
     "@types/ip": "npm:@types/ip@1.1.3",
-    "dotenv": "https://deno.land/std@0.217.0/dotenv/mod.ts",
-    "hono": "npm:hono@4.0.6",
+    "dotenv": "jsr:@std/dotenv@0.225.2",
+    "hono": "npm:hono@4.6.5",
     "imgproxy": "npm:imgproxy@1.2.0",
     "ip": "npm:ip@2.0.1",
-    "maxmind": "npm:maxmind@4.3.18",
-    "nostr-tools": "npm:nostr-tools@2.3.1",
-    "zod": "npm:zod@3.22.4"
+    "maxmind": "npm:maxmind@4.3.22",
+    "nostr-tools": "npm:nostr-tools@2.8.1",
+    "zod": "npm:zod@3.23.8"
   },
   "lint": {
     "include": [
