@@ -51,7 +51,7 @@ const getProfileRoute = createRoute({
           schema: errorSchema,
         },
       },
-      description: 'Returns an error',
+      description: 'Event Not Found',
     },
   },
 });
@@ -86,7 +86,7 @@ const getProfilePictureRoute = createRoute({
           schema: errorSchema,
         },
       },
-      description: 'Returns an error',
+      description: 'Event Not Found',
     },
   },
 });
@@ -101,7 +101,7 @@ profilesAPI.openapi(getProfileRoute, async (c) => {
   if (event == null) {
     return c.json({ code: 404, message: 'Event Not Found' }, 404);
   }
-  return c.json(event);
+  return c.json(event, 200);
 });
 
 profilesAPI.openapi(getProfilePictureRoute, async (c) => {
@@ -120,16 +120,8 @@ profilesAPI.openapi(getProfilePictureRoute, async (c) => {
 
   if (imgproxy != null && size !== 0) {
     return c.json({
-      picture: imgproxy
-        .builder()
-        .resize('fill', size, size, false)
-        .generateUrl(picture),
-      banner: imgproxy
-        .builder()
-        .resize('fit', size, size, false)
-        .generateUrl(banner),
-    });
+    }, 200);
   } else {
-    return c.json({ picture, banner });
+    return c.json({ picture, banner }, 200);
   }
 });
