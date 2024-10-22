@@ -101,5 +101,5 @@ eventsAPI.openapi(publishEventRoute, async (c) => {
   return c.json({
     code: 201,
     message: 'Event Published',
-  });
+  }, 201);
 });
