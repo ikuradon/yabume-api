@@ -7,14 +7,14 @@
     "/": "./",
     "./": "./",
     "@hono/swagger-ui": "npm:@hono/swagger-ui@0.4.1",
-    "@hono/zod-openapi": "npm:@hono/zod-openapi@0.16.4",
+    "@hono/zod-openapi": "npm:@hono/zod-openapi@0.17.0",
     "@imgproxy/imgproxy-node": "npm:@imgproxy/imgproxy-node@1.0.6",
     "@types/ip": "npm:@types/ip@1.1.3",
     "dotenv": "jsr:@std/dotenv@0.225.2",
-    "hono": "npm:hono@4.6.5",
+    "hono": "npm:hono@4.6.9",
     "ip": "npm:ip@2.0.1",
     "maxmind": "npm:maxmind@4.3.22",
-    "nostr-tools": "npm:nostr-tools@2.8.1",
+    "nostr-tools": "npm:nostr-tools@2.10.1",
     "zod": "npm:zod@3.23.8"
   },
   "lint": {
