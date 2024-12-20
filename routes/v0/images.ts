@@ -35,6 +35,8 @@ export const imagesAPI = new OpenAPIHono({ defaultHook: validationHook });
 
 imagesAPI.openapi(optimizeImageRoute, (c) => {
   const { opts, url }: { opts: string; url: string } = c.req.valid('param');
+  const query = c.req.url.split('?').slice(-1).join();
+  const req_url = url + '?' + query;
   if (imgproxyConfig != null) {
     const options = getOptionsMap(opts);
 
@@ -55,7 +57,7 @@ imagesAPI.openapi(optimizeImageRoute, (c) => {
 
     const optimizedUrl = generateImageUrl({
       ...imgproxyConfig,
-      url,
+      url: req_url,
       options: optimizerOptions,
     });
     return c.redirect(optimizedUrl, 301);
